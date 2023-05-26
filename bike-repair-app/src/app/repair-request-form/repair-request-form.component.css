@@ -21,9 +21,21 @@ textarea {
 .button {
   font-size: larger;
   margin-top: 15px;
+  padding: 10px;
+  border-radius: 10px;
 }
 
 .section {
   width: fit-content;
   margin: 5% auto 0;
+}
+
+.message {
+  width: fit-content;
+  padding: 10px;
+  margin: 25px auto 0;
+  font-size: larger;
+  background-color: green;
+  color: white;
+  border-radius: 10px;
 }

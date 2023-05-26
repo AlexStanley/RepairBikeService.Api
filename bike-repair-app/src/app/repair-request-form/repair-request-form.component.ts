@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { FormBuilder, Validators } from '@angular/forms';
 import { RepairRequestService } from '../repair-request.service';
 
 @Component({
@@ -7,26 +8,30 @@ import { RepairRequestService } from '../repair-request.service';
   styleUrls: ['./repair-request-form.component.css'],
 })
 export class RepairRequestFormComponent {
-  name: string | any;
-  email: string | any;
-  description: string | any;
+  repairForm = this.formBuilder.group({
+    name: ['', Validators.required],
+    email: ['', [Validators.required, Validators.email]],
+    description: ['', [Validators.required]],
+  });
 
-  constructor(private repairRequestService: RepairRequestService) {}
+  isFormSubmitted = false;
+
+  constructor(
+    private formBuilder: FormBuilder,
+    private repairRequestService: RepairRequestService
+  ) {}
 
   submitForm() {
-    const repairRequest = {
-      name: this.name,
-      email: this.email,
-      description: this.description,
-    };
-
-    this.repairRequestService.submitRepairRequest(repairRequest).subscribe({
-      next: () => {
-        alert('Repair request submitted successfully.');
-      },
-      error: () => {
-        alert(`An error occurred while submitting the repair request.`);
-      },
-    });
+    this.repairRequestService
+      .submitRepairRequest(this.repairForm.value)
+      .subscribe({
+        next: () => {
+          this.isFormSubmitted = true;
+          this.repairForm.reset();
+        },
+        error: () => {
+          alert(`An error occurred while submitting the repair request.`);
+        },
+      });
   }
 }

@@ -1,3 +1,8 @@
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Net.Http.Headers;
+using RepairBikeService.Api.Models;
+using RepairBikeService.Api.Repositories;
+
 namespace RepairBikeService.Api
 {
     public class Program
@@ -7,6 +12,17 @@ namespace RepairBikeService.Api
             var builder = WebApplication.CreateBuilder(args);
 
             // Add services to the container.
+            builder.Services.AddDbContext<RepairingDbContext>(options =>
+                options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
+            builder.Services.AddScoped<IRepairRequestRepository, RepairRequestRepository>();
+
+            builder.Services.AddCors(options => 
+            {
+                options.AddDefaultPolicy(builder 
+                    => builder.WithOrigins("http://localhost:4200").AllowAnyMethod().WithHeaders(HeaderNames.ContentType, "x-custom-header"));
+                
+            });
+
 
             builder.Services.AddControllers();
             // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
@@ -23,6 +39,8 @@ namespace RepairBikeService.Api
             }
 
             app.UseHttpsRedirection();
+
+            app.UseCors();
 
             app.UseAuthorization();
 

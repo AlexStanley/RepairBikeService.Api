@@ -9,7 +9,7 @@ export class RepairRequestService {
 
   submitRepairRequest(repairRequest: any) {
     return this.http.post(
-      'http://localhost:5000/api/repair-requests',
+      'https://localhost:7101/api/repairrequest',
       repairRequest
     );
   }
