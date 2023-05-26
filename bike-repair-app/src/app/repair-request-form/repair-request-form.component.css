@@ -1,0 +1,29 @@
+label {
+  font-size: large;
+}
+
+input {
+  margin: 5px 0;
+  padding: 5px;
+  font-size: medium;
+}
+
+textarea {
+  height: 100px;
+  font-size: larger;
+}
+
+.form-item {
+  display: flex;
+  flex-direction: column;
+}
+
+.button {
+  font-size: larger;
+  margin-top: 15px;
+}
+
+.section {
+  width: fit-content;
+  margin: 5% auto 0;
+}
